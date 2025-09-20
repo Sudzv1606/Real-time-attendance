@@ -1,6 +1,6 @@
-# 📚 Attendance Tracker PWA
+# 📚 Attendr - Attendance Tracker PWA
 
-A Progressive Web App for students to track their lecture attendance in real-time and maintain their target attendance percentage. Built with vanilla HTML, CSS, and JavaScript.
+A Progressive Web App for students to track their lecture attendance in real-time and maintain their target attendance percentage. Built with vanilla HTML, CSS, and JavaScript. Now optimized for both Android and iOS!
 
 ## ✨ Features
 
@@ -13,13 +13,14 @@ A Progressive Web App for students to track their lecture attendance in real-tim
 - **Offline Support**: Works completely offline after first load
 
 ### PWA Features
-- **Installable**: Add to home screen on mobile devices
+- **Installable**: Add to home screen on mobile devices (Android & iOS)
 - **Offline Ready**: Service worker caches all assets for offline use
 - **Responsive Design**: Works perfectly on phones, tablets, and desktop
 - **App-like Experience**: Standalone mode with native app feel
+- **iOS Optimized**: Custom install banner, status bar styling, and icons
 
 ### User Experience
-- **Clean Interface**: Minimalist, card-based design
+- **Clean Interface**: Modern, card-based design with glassmorphism effects
 - **Toast Notifications**: Instant feedback for actions
 - **Confetti Animation**: Celebration when reaching attendance targets
 - **Edit Courses**: Modify course settings and reset attendance
@@ -42,6 +43,22 @@ A Progressive Web App for students to track their lecture attendance in real-tim
 3. **Open** http://localhost:8000 in your browser
 4. **Install** the app by clicking the install button in your browser
 
+## 📱 Platform-Specific Installation
+
+### Android/Chrome
+- Look for the **"Install"** or **"Add to Home Screen"** icon in the address bar
+- Or tap the three-dot menu → "Install app" or "Add to Home screen"
+
+### iOS/Safari
+- iOS shows a custom banner: "Add Attendr to Your Home Screen"
+- Tap **Share** (square with arrow) → Scroll down → **Add to Home Screen**
+- The app will appear on your home screen with a native icon
+- **Note**: Dismiss the banner once by tapping the × if you prefer manual installation
+
+### Desktop
+- The app works as a responsive web app
+- Bookmark for quick access
+
 ## 📱 How to Use
 
 ### First Time Setup
@@ -63,20 +80,26 @@ A Progressive Web App for students to track their lecture attendance in real-tim
 - ⚠️ **Below Target**: Get warnings when you're at risk of falling below target
 - 🌙 **Dark Mode**: Toggle between light and dark themes
 - 📱 **Mobile First**: Designed to work great on phones
+- **iOS Users**: The app runs in standalone mode (no browser UI) for a native feel
 
 ## 🛠 Technical Details
 
 ### File Structure
 ```
-attendance-tracker/
-├── index.html          # Main HTML structure
-├── app.css            # Styling and responsive design
-├── app.js             # Core application logic
-├── manifest.json      # PWA manifest
+attendr/
+├── index.html          # Main HTML structure with iOS metas
+├── app.css            # Styling with dark mode and iOS banner
+├── app.js             # Core logic + iOS detection
+├── manifest.json      # PWA manifest (Android-focused)
 ├── service-worker.js  # Offline functionality
 ├── generate-icons.js  # Icon generation script
-├── icons/             # Icon files (placeholder)
-└── README.md          # This file
+├── icons/             # Platform-specific icons
+│   ├── icon-180.png   # iOS iPhone icon
+│   ├── icon-192.png   # Android/web icon
+│   ├── icon-512.png   # High-res icon
+│   └── splash.png     # iOS launch screen (optional)
+├── README.md          # This file
+└── app.css            # Modern, responsive styles
 ```
 
 ### Data Structure
@@ -92,7 +115,8 @@ attendance-tracker/
     }
   ],
   settings: {
-    darkMode: false
+    darkMode: false,
+    iosBannerDismissed: true  // Tracks if iOS banner was shown
   }
 }
 ```
@@ -102,10 +126,17 @@ attendance-tracker/
 - **Needed to Reach Target**: `Math.ceil((totalLectures * targetPercent/100) - attended)`
 - **Safe Skips**: `Math.max(0, remainingLectures - neededToReachTarget)`
 
+### iOS-Specific Optimizations
+- **Meta Tags**: Black translucent status bar for native look
+- **Icons**: 180x180 PNG for iPhone home screen
+- **Install Detection**: Custom banner guides users to Share → Add to Home Screen
+- **Standalone Mode**: Hides Safari UI when installed
+- **Splash Screen**: Optional launch image (replace placeholder)
+
 ### Browser Support
-- ✅ Chrome 60+
+- ✅ Chrome 60+ (Android)
+- ✅ Safari 11.1+ (iOS 11.3+)
 - ✅ Firefox 44+
-- ✅ Safari 11.1+
 - ✅ Edge 79+
 - ✅ Mobile browsers with PWA support
 
@@ -115,18 +146,22 @@ attendance-tracker/
 Edit the CSS variables in `app.css`:
 ```css
 :root {
-    --primary-color: #4f46e5;    /* Main theme color */
-    --success-color: #10b981;    /* Success/green */
-    --danger-color: #ef4444;     /* Error/red */
-    --warning-color: #f59e0b;    /* Warning/orange */
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);  /* App theme */
+    --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);   /* Success */
 }
 ```
 
 ### Icons
-Replace the data URL icons in `manifest.json` and `index.html` with your own PNG/SVG files.
+- Replace placeholders in `/icons/` with your designs
+- Use [maskable.app](https://maskable.app) for adaptive icons
+- iOS: 180x180 PNG (icon-180.png)
+- Android: 192x192 & 512x512 PNGs
+- Splash: 1242x2688 PNG for iOS launch (optional)
 
-### Course Limits
-The app supports unlimited courses - add as many as needed!
+### iOS Banner
+Customize the message or styling in `app.js` and `app.css`:
+- Detection uses `navigator.platform` and touch events
+- Banner auto-hides after dismissal (stored in localStorage)
 
 ## 🔧 Development
 
@@ -134,26 +169,41 @@ The app supports unlimited courses - add as many as needed!
 1. Make changes to the files
 2. Refresh the browser (or hard refresh with Ctrl+F5)
 3. Test on different screen sizes
-4. Check PWA installation flow
+4. For iOS: Use Safari DevTools or iOS Simulator
 
 ### Testing PWA Features
-1. **Install**: Look for "Install" or "Add to Home Screen" in browser menu
-2. **Offline**: Disable network and refresh - app should still work
-3. **Service Worker**: Check DevTools > Application > Service Workers
+1. **Android Install**: Chrome address bar → Install icon
+2. **iOS Install**: Safari → Share → Add to Home Screen (banner guides you)
+3. **Offline**: Disable network and refresh - app should still work
+4. **Service Worker**: DevTools > Application > Service Workers
+5. **Standalone Mode**: Check `window.matchMedia('(display-mode: standalone)')`
+
+### iOS Testing Tips
+- **Simulator**: Use Xcode iOS Simulator + Safari DevTools
+- **Real Device**: Serve over local network (e.g., `python -m http.server 8000 --bind 0.0.0.0`)
+- **Common Issues**:
+  - Icons not showing: Ensure HTTPS for production; local HTTP works for testing
+  - Banner not appearing: Clear localStorage (`iosBannerDismissed`)
+  - Status bar: Test in standalone mode only
 
 ### Common Issues
-- **Icons not loading**: Ensure manifest.json paths are correct
-- **PWA not installing**: Check HTTPS requirement for some features
+- **Icons not loading**: Ensure paths match in manifest.json and HTML
+- **PWA not installing**: Requires HTTPS in production; local HTTP for dev
 - **Data not persisting**: Ensure localStorage is enabled
+- **iOS Banner**: Only shows on first visit; dismisses permanently
 
 ## 📄 License
 
-This project is open source and available under the MIT License.
+MIT License - Feel free to use, modify, and distribute.
 
 ## 🤝 Contributing
 
-Feel free to submit issues and enhancement requests!
+Submit issues or PRs for features like:
+- Push notifications for reminders
+- Calendar view for history
+- Data export (PDF/CSV)
+- More iOS optimizations
 
 ---
 
-**Built with ❤️ using vanilla web technologies**
+**Built with ❤️ using vanilla web technologies | iOS & Android Ready**

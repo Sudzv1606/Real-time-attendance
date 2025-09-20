@@ -15,6 +15,7 @@ class AttendanceTracker {
         this.loadData();
         this.setupEventListeners();
         this.applyTheme();
+        this.checkForIOSInstall();
         this.showInitialScreen();
     }
 
@@ -121,6 +122,11 @@ class AttendanceTracker {
             if (e.target === e.currentTarget) {
                 this.closeEditModal();
             }
+        });
+
+        // iOS install banner close
+        document.getElementById('close-ios-banner').addEventListener('click', () => {
+            this.hideIOSBanner();
         });
     }
 
@@ -372,6 +378,39 @@ class AttendanceTracker {
 
     closeEditModal() {
         document.getElementById('edit-modal').style.display = 'none';
+    }
+
+    // iOS Detection and Install Banner
+    isIOS() {
+        return [
+            'iPad Simulator',
+            'iPhone Simulator',
+            'iPod Simulator',
+            'iPad',
+            'iPhone',
+            'iPod'
+        ].includes(navigator.platform)
+        || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+    }
+
+    checkForIOSInstall() {
+        if (this.isIOS() && !window.matchMedia('(display-mode: standalone)').matches) {
+            // Show banner after a short delay to avoid interrupting initial load
+            setTimeout(() => {
+                const banner = document.getElementById('ios-install-banner');
+                if (banner && !localStorage.getItem('iosBannerDismissed')) {
+                    banner.style.display = 'block';
+                }
+            }, 2000);
+        }
+    }
+
+    hideIOSBanner() {
+        const banner = document.getElementById('ios-install-banner');
+        if (banner) {
+            banner.style.display = 'none';
+            localStorage.setItem('iosBannerDismissed', 'true');
+        }
     }
 
     // Utility Functions
