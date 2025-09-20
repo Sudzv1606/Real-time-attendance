@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Attendance Tracker">
+
+    <title>Attendance Tracker</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%234f46e5'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3E📚%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%234f46e5'/%3E%3Ctext x='96' y='110' font-family='Arial' font-size='80' fill='white' text-anchor='middle'%3E📚%3C/text%3E%3C/svg%3E">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="app.css">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="app.js" as="script">
+</head>
+<body>
+    <!-- Setup Screen (shown initially if no courses exist) -->
+    <div id="setup-screen" class="screen">
+        <div class="container">
+            <header class="header">
+                <h1>📚 Setup Your Courses</h1>
+                <p>Add your courses to start tracking attendance</p>
+            </header>
+
+            <form id="course-form" class="course-form">
+                <div class="form-group">
+                    <label for="course-name">Course Name</label>
+                    <input type="text" id="course-name" placeholder="e.g., Math 101" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="total-lectures">Total Lectures</label>
+                    <input type="number" id="total-lectures" placeholder="40" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="target-percent">Target %</label>
+                    <input type="number" id="target-percent" placeholder="75" min="1" max="100" value="75" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Course</button>
+            </form>
+
+            <div id="courses-list" class="courses-list">
+                <!-- Added courses will appear here -->
+            </div>
+
+            <div class="setup-actions">
+                <button id="done-setup" class="btn btn-success" style="display: none;">
+                    ✓ Done Setup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen (main screen) -->
+    <div id="dashboard-screen" class="screen" style="display: none;">
+        <div class="container">
+            <header class="header">
+                <h1>📊 Attendance Tracker</h1>
+                <p>Keep your attendance on track</p>
+                <button id="dark-mode-toggle" class="dark-mode-toggle">🌙</button>
+            </header>
+
+            <div id="overall-summary" class="overall-summary">
+                <!-- Overall stats will be shown here -->
+            </div>
+
+            <div id="courses-grid" class="courses-grid">
+                <!-- Course cards will be rendered here -->
+            </div>
+
+            <div class="dashboard-actions">
+                <button id="add-course-btn" class="btn btn-secondary">+ Add Course</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Course Modal -->
+    <div id="edit-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Course</h2>
+                <button id="close-edit-modal" class="close-btn">&times;</button>
+            </div>
+
+            <form id="edit-course-form" class="course-form">
+                <input type="hidden" id="edit-course-id">
+
+                <div class="form-group">
+                    <label for="edit-course-name">Course Name</label>
+                    <input type="text" id="edit-course-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-total-lectures">Total Lectures</label>
+                    <input type="number" id="edit-total-lectures" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-target-percent">Target %</label>
+                    <input type="number" id="edit-target-percent" min="1" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-attended">Attended Lectures</label>
+                    <input type="number" id="edit-attended" min="0" required>
+                </div>
+
+                <div class="edit-actions">
+                    <button type="button" id="reset-attendance" class="btn btn-danger">Reset Attendance</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast" style="display: none;">
+        <span id="toast-message">Attendance logged!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
