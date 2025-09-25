@@ -458,6 +458,17 @@ body::before {
     color: var(--gray-900);
 }
 
+.last-marked-info {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    font-style: italic;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background-color: var(--gray-50);
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color);
+}
+
 .course-actions {
     display: flex;
     gap: 12px;
@@ -498,9 +509,12 @@ body::before {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .modal-content {
@@ -510,10 +524,11 @@ body::before {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg), var(--shadow-glow);
     max-width: 500px;
-    width: 90%;
-    max-height: 90vh;
+    width: 100%;
+    max-height: calc(100vh - 40px);
     overflow-y: auto;
     animation: modalSlideIn 0.3s ease-out;
+    margin-top: 20px;
 }
 
 @keyframes modalSlideIn {
@@ -833,6 +848,297 @@ button:focus {
     outline-offset: 2px;
 }
 
+/* Detail Modal Styles */
+.large-modal .modal-content {
+    max-width: 900px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Overview Tab */
+.detail-overview .overview-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.overview-stat {
+    text-align: center;
+    padding: 20px;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.overview-stat .stat-label {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+.progress-section {
+    margin-bottom: 24px;
+}
+
+.progress-section h3 {
+    margin-bottom: 12px;
+    color: var(--gray-900);
+}
+
+.quick-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--gray-50);
+    border-radius: 8px;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.info-value {
+    color: var(--gray-900);
+}
+
+/* History Tab */
+.attendance-history h3 {
+    margin-bottom: 16px;
+    color: var(--gray-900);
+}
+
+.history-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-bottom: 8px;
+}
+
+.history-date {
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.history-time {
+    color: var(--gray-600);
+}
+
+.history-number {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.no-history {
+    text-align: center;
+    padding: 40px;
+    color: var(--gray-500);
+}
+
+/* Statistics Tab */
+.attendance-statistics h3 {
+    margin-bottom: 20px;
+    color: var(--gray-900);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-right: 16px;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-card .stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.stat-card .stat-label {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+.time-slots, .weekday-stats {
+    margin-top: 24px;
+}
+
+.time-slots h4, .weekday-stats h4 {
+    margin-bottom: 12px;
+    color: var(--gray-900);
+    font-size: 1.1rem;
+}
+
+.time-slot-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.time-slot-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--gray-50);
+    border-radius: 6px;
+}
+
+.slot-name {
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.slot-count {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+}
+
+.weekday-bars {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.weekday-item {
+    text-align: center;
+}
+
+.weekday-name {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 4px;
+}
+
+.weekday-bar {
+    height: 60px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.weekday-fill {
+    height: 100%;
+    background: var(--success-gradient);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.weekday-count {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-600);
+}
+
+/* Detail Actions */
+.detail-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+}
+
+/* Responsive adjustments for detail modal */
+@media (max-width: 768px) {
+    .large-modal .modal-content {
+        margin: 10px;
+        width: calc(100% - 20px);
+        max-height: calc(100vh - 20px);
+    }
+
+    .detail-tabs {
+        flex-direction: column;
+    }
+
+    .tab-btn {
+        text-align: center;
+    }
+
+    .overview-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .time-slot-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .weekday-bars {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+    }
+
+    .weekday-name {
+        font-size: 0.7rem;
+    }
+
+    .weekday-bar {
+        height: 40px;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
     .course-card {
@@ -841,5 +1147,9 @@ button:focus {
 
     .btn {
         border: 2px solid currentColor;
+    }
+
+    .stat-card, .history-item, .overview-stat {
+        border: 2px solid var(--gray-300);
     }
 }
