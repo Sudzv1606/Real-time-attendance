@@ -90,62 +90,85 @@
     <!-- Course Detail Modal -->
     <div id="detail-modal" class="modal" style="display: none;">
         <div class="modal-content large-modal">
-            <div class="modal-header">
+            <div class="detail-modal-header">
                 <h2 id="detail-course-title">Course Details</h2>
                 <button id="close-detail-modal" class="close-btn">&times;</button>
             </div>
 
-            <div class="detail-overview">
-                <div class="overview-stats">
-                    <div class="overview-stat">
-                        <div class="stat-number" id="detail-attended">0</div>
-                        <div class="stat-label">Lectures Attended</div>
+            <div class="detail-content">
+                <!-- Enhanced Stats Grid -->
+                <div class="detail-stats-grid">
+                    <div class="detail-stat-card">
+                        <div class="detail-stat-number" id="detail-attended">0</div>
+                        <div class="detail-stat-label">Lectures Attended</div>
                     </div>
-                    <div class="overview-stat">
-                        <div class="stat-number" id="detail-remaining">0</div>
-                        <div class="stat-label">Lectures Remaining</div>
+                    <div class="detail-stat-card">
+                        <div class="detail-stat-number" id="detail-remaining">0</div>
+                        <div class="detail-stat-label">Lectures Remaining</div>
                     </div>
-                    <div class="overview-stat">
-                        <div class="stat-number" id="detail-percentage">0%</div>
-                        <div class="stat-label">Current Percentage</div>
+                    <div class="detail-stat-card">
+                        <div class="detail-stat-number" id="detail-percentage">0%</div>
+                        <div class="detail-stat-label">Current Percentage</div>
                     </div>
                 </div>
 
+                <!-- Progress Section -->
                 <div class="progress-section">
                     <h3>Progress to Target</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="detail-progress-fill"></div>
+                    <div class="detail-progress-bar">
+                        <div class="detail-progress-fill" id="detail-progress-fill"></div>
                     </div>
-                    <p id="detail-target-status">Target: 75%</p>
+                    <p class="detail-target-status" id="detail-target-status">Target: 75%</p>
                 </div>
 
-                <div class="quick-info">
-                    <div class="info-item">
-                        <span class="info-label">Last Marked:</span>
-                        <span class="info-value" id="detail-last-marked">Never</span>
+                <!-- Quick Info Cards -->
+                <div class="detail-info-grid">
+                    <div class="detail-info-card">
+                        <div class="detail-info-header">
+                            <span class="detail-info-icon">🕐</span>
+                            <span class="detail-info-title">Last Marked</span>
+                        </div>
+                        <div class="detail-info-content">
+                            <span class="detail-info-label">Time & Date:</span>
+                            <span class="detail-info-value" id="detail-last-marked">Never</span>
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Safe to Skip:</span>
-                        <span class="info-value" id="detail-safe-skip">0</span>
+                    <div class="detail-info-card">
+                        <div class="detail-info-header">
+                            <span class="detail-info-icon">✅</span>
+                            <span class="detail-info-title">Safe to Skip</span>
+                        </div>
+                        <div class="detail-info-content">
+                            <span class="detail-info-label">Lectures:</span>
+                            <span class="detail-info-value" id="detail-safe-skip">0</span>
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Need to Attend:</span>
-                        <span class="info-value" id="detail-need-attend">0</span>
+                    <div class="detail-info-card">
+                        <div class="detail-info-header">
+                            <span class="detail-info-icon">🎯</span>
+                            <span class="detail-info-title">Need to Attend</span>
+                        </div>
+                        <div class="detail-info-content">
+                            <span class="detail-info-label">Lectures:</span>
+                            <span class="detail-info-value" id="detail-need-attend">0</span>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Attendance History -->
                 <div class="attendance-history">
-                    <h3>Attendance Records</h3>
+                    <h3>📋 Attendance Records</h3>
                     <div id="history-list" class="history-list">
                         <!-- Attendance records will be populated here -->
                     </div>
                     <div id="no-history" class="no-history" style="display: none;">
-                        <p>No attendance records yet. Start marking your attendance!</p>
+                        <p>📝 No attendance records yet. Start marking your attendance!</p>
                     </div>
                 </div>
 
+                <!-- Attendance Statistics -->
                 <div class="attendance-statistics">
-                    <h3>Attendance Statistics</h3>
+                    <h3>📊 Attendance Statistics</h3>
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-icon">📅</div>
@@ -164,7 +187,7 @@
                         </div>
 
                         <div class="stat-card">
-                            <div class="stat-icon">📊</div>
+                            <div class="stat-icon">📈</div>
                             <div class="stat-content">
                                 <div class="stat-value" id="stat-avg-week">0</div>
                                 <div class="stat-label">Avg per Week</div>
@@ -181,24 +204,25 @@
                     </div>
 
                     <div class="time-slots">
-                        <h4>Attendance by Time Slot</h4>
+                        <h4>⏰ Attendance by Time Slot</h4>
                         <div id="time-slot-stats" class="time-slot-stats">
                             <!-- Time slot statistics will be populated here -->
                         </div>
                     </div>
 
                     <div class="weekday-stats">
-                        <h4>Attendance by Day</h4>
+                        <h4>📅 Attendance by Day</h4>
                         <div id="weekday-stats" class="weekday-bars">
                             <!-- Weekday statistics will be populated here -->
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="detail-actions">
-                <button id="mark-from-detail" class="btn btn-success">+ Mark Attendance</button>
-                <button id="edit-from-detail" class="btn btn-secondary">Edit Course</button>
+                <!-- Action Buttons -->
+                <div class="detail-actions">
+                    <button id="mark-from-detail" class="btn btn-success">+ Mark Attendance</button>
+                    <button id="edit-from-detail" class="btn btn-secondary">Edit Course</button>
+                </div>
             </div>
         </div>
     </div>
